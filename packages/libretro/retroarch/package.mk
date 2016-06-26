@@ -24,7 +24,7 @@ PKG_REV="3"
 PKG_ARCH="any"
 PKG_LICENSE="GPLv3"
 PKG_SITE="https://github.com/libretro/RetroArch"
-PKG_URL="$LAKKA_MIRROR/$PKG_NAME-$PKG_VERSION.tar.xz"
+PKG_URL="https://github.com/libretro/RetroArch/archive/$PKG_VERSION.tar.gz"
 PKG_DEPENDS_TARGET="toolchain alsa-lib freetype zlib retroarch-assets core-info retroarch-joypad-autoconfig common-shaders lakka-update libretro-database ffmpeg"
 PKG_PRIORITY="optional"
 PKG_SECTION="libretro"
@@ -73,6 +73,11 @@ PKG_CONFIGURE_OPTS_TARGET="--disable-vg \
                            --enable-fbo \
                            --enable-zlib \
                            --enable-freetype"
+
+unpack() {
+  tar -zxf $SOURCES/$PKG_NAME/$PKG_VERSION.tar.gz -C $BUILD
+  mv $BUILD/RetroArch* $BUILD/$PKG_NAME-$PKG_VERSION
+}
 
 pre_configure_target() {
   strip_lto # workaround for https://github.com/libretro/RetroArch/issues/1078
